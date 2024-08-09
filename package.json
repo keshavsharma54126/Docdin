@@ -6,15 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.13",
+    "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.17.0",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "@vercel/blob": "^0.23.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "framer-motion": "^11.3.21",
     "lucide-react": "^0.424.0",
     "markdown-draft-js": "^2.4.0",
     "nanoid": "^5.0.7",
@@ -23,9 +28,11 @@
     "react": "^18",
     "react-dom": "^18",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-hook-form": "^7.52.2",
     "react-markdown": "^9.0.1",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/markdown-draft-js": "^2.2.7",
