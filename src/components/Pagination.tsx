@@ -1,46 +1,117 @@
+"use client";
 import React from "react";
-import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-interface PaginationProps {
-  currentPage: number;
+interface PaginationControlProps {
+  hasNextPage: boolean;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  currentPage: number;
 }
 
-export default function Pagination({
-  currentPage,
+export function PaginationDemo({
+  hasNextPage,
   totalPages,
-  onPageChange,
-}: PaginationProps) {
+  currentPage,
+}: PaginationControlProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const createPageUrl = (pageNumber: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `?${params.toString()}`;
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    router.push(createPageUrl(pageNumber));
+  };
+
+  const renderPageLinks = () => {
+    const pageLinks = [];
+    const maxVisiblePages = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageLinks.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            onClick={() => handlePageChange(i)}
+            isActive={i === currentPage}
+            className="cursor-pointer hover:bg-gray-100" // Added cursor and hover styles
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return pageLinks;
+  };
+
   return (
-    <div className="flex items-center justify-center space-x-2 mt-8">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-2 py-1">
-        <ChevronLeft size={16} />
-      </Button>
-      {[...Array(totalPages)].map((_, index) => (
-        <Button
-          key={index}
-          variant={currentPage === index + 1 ? "default" : "outline"}
-          size="sm"
-          onClick={() => onPageChange(index + 1)}
-          className="px-3 py-1">
-          {index + 1}
-        </Button>
-      ))}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-2 py-1">
-        <ChevronRight size={16} />
-      </Button>
-    </div>
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+            aria-disabled={currentPage === 1}
+            className={`cursor-pointer ${currentPage === 1 ? "opacity-50" : "hover:bg-gray-100"}`} // Added cursor and conditional styles
+          />
+        </PaginationItem>
+
+        {currentPage > 2 && (
+          <>
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(1)}
+                className="cursor-pointer hover:bg-gray-100" // Added cursor and hover styles
+              >
+                1
+              </PaginationLink>
+            </PaginationItem>
+            {currentPage > 3 && <PaginationEllipsis />}
+          </>
+        )}
+
+        {renderPageLinks()}
+
+        {currentPage < totalPages - 1 && (
+          <>
+            {currentPage < totalPages - 2 && <PaginationEllipsis />}
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(totalPages)}
+                className="cursor-pointer hover:bg-gray-100" // Added cursor and hover styles
+              >
+                {totalPages}
+              </PaginationLink>
+            </PaginationItem>
+          </>
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => hasNextPage && handlePageChange(currentPage + 1)}
+            aria-disabled={!hasNextPage}
+            className={`cursor-pointer ${!hasNextPage ? "opacity-50" : "hover:bg-gray-100"}`} // Added cursor and conditional styles
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }

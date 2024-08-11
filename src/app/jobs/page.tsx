@@ -1,9 +1,26 @@
-import Image from "next/image";
-import prisma from "@/lib/db";
+import { Suspense } from "react";
 import JobListItem from "@/components/JobListItem";
-import Jobfilter from "@/components/JobFilter";
+import JobFilter from "@/components/JobFilter";
+import { PaginationDemo } from "@/components/Pagination";
+import prisma from "@/lib/db";
 
-export default async function JobsPage() {
+export default async function JobsPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const page = Number(searchParams["page"] ?? "1");
+  const per_page = Number(searchParams["per_page"] ?? "5");
+
+  const totalJobs = await prisma.jobs.count({
+    where: {
+      approved: true,
+    },
+  });
+
+  const totalPages = Math.ceil(totalJobs / per_page);
+  const hasNextPage = page < totalPages;
+
   const jobs = await prisma.jobs.findMany({
     where: {
       approved: true,
@@ -11,69 +28,46 @@ export default async function JobsPage() {
     orderBy: {
       createdAt: "desc",
     },
+    skip: (page - 1) * per_page,
+    take: per_page,
   });
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className=" min-h-screen">
       <div className="container mx-auto px-4 py-12">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Discover Your Next Career Opportunity
-          </h1>
-          <p className="text-xl text-gray-600">
-            Browse through our curated list of exciting job openings
-          </p>
-        </header>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="lg:w-1/4">
+        {/* Header and other content... */}
+        <div className="flex flex-col lg:flex-row gap-4">
+          <aside className="lg:w-1/3">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold mb-4">Filter Jobs</h2>
-              <Jobfilter />
+              <JobFilter />
             </div>
           </aside>
-
           <main className="lg:w-3/4">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-semibold mb-6">
                 Latest Job Listings
               </h2>
               {jobs.length > 0 ? (
-                <div className="space-y-6">
+                <div className="space-y-3">
                   {jobs.map((job) => (
                     <JobListItem key={job.id} job={job} />
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">
-                    No job listings
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    We couldn't find any job listings at the moment.
-                  </p>
-                  <div className="mt-6">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      Refresh listings
-                    </button>
-                  </div>
+                  {/* No jobs found content... */}
                 </div>
               )}
+            </div>
+            <div className="mt-5">
+              <Suspense fallback={<div>Loading...</div>}>
+                <PaginationDemo
+                  hasNextPage={hasNextPage}
+                  totalPages={totalPages}
+                  currentPage={page}
+                />
+              </Suspense>
             </div>
           </main>
         </div>

@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
   weight: ["400", "600", "700"],
   subsets: ["latin"],
@@ -12,8 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "JobHub - Find Your Dream Job",
-  description: "Discover exciting career opportunities on JobHub",
+  title: "DocdIN - Professional Network for Medical Professionals",
+  description:
+    "Connect, collaborate, and advance your medical career on DocdIN",
 };
 
 export default function RootLayout({
@@ -24,48 +24,64 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${poppins.variable} font-sans bg-gradient-to-br from-blue-50 to-indigo-100`}>
+        className={`${poppins.variable} font-sans bg-gradient-to-br from-blue-50 to-teal-50`}>
         <header className="bg-white bg-opacity-90 backdrop-blur-md shadow-md sticky top-0 z-10">
           <nav className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               <Link
                 href="/"
-                className="text-2xl font-bold text-indigo-600 font-poppins">
-                JobHub
+                className="text-2xl font-bold text-teal-600 font-poppins flex items-center">
+                <Image
+                  src="/docdin-logo.svg"
+                  alt="DocdIN Logo"
+                  width={40}
+                  height={40}
+                  className="mr-2"
+                />
+                DocdIN
               </Link>
               <div className="space-x-6">
                 <Link
+                  href="/network"
+                  className="text-gray-700 hover:text-teal-600 transition duration-300 font-medium">
+                  My Network
+                </Link>
+                <Link
                   href="/jobs"
-                  className="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">
+                  className="text-gray-700 hover:text-teal-600 transition duration-300 font-medium">
                   Jobs
                 </Link>
                 <Link
-                  href="/about"
-                  className="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">
-                  About
+                  href="/messaging"
+                  className="text-gray-700 hover:text-teal-600 transition duration-300 font-medium">
+                  Messaging
                 </Link>
                 <Link
-                  href="/contact"
-                  className="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">
-                  Contact
-                </Link>
-                <Link
-                  href="/post-job"
-                  className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition duration-300 shadow-md hover:shadow-lg">
-                  Post a Job
+                  href="/profile"
+                  className="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-700 transition duration-300 shadow-md hover:shadow-lg">
+                  My Profile
                 </Link>
               </div>
             </div>
           </nav>
         </header>
         <main className="min-h-screen">{children}</main>
-        <footer className="bg-gradient-to-r from-indigo-800 to-blue-900 text-white py-16">
+        <footer className="bg-gradient-to-r from-teal-800 to-blue-900 text-white py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <div>
-                <h3 className="text-3xl font-bold mb-4 font-poppins">JobHub</h3>
-                <p className="text-indigo-200">
-                  Connecting talent with opportunities
+                <h3 className="text-3xl font-bold mb-4 font-poppins flex items-center">
+                  <Image
+                    src="/docdin-logo-white.svg"
+                    alt="DocdIN Logo"
+                    width={40}
+                    height={40}
+                    className="mr-2"
+                  />
+                  DocdIN
+                </h3>
+                <p className="text-teal-200">
+                  Connecting medical professionals worldwide
                 </p>
               </div>
               <div>
@@ -76,22 +92,22 @@ export default function RootLayout({
                   <li>
                     <Link
                       href="/jobs"
-                      className="text-indigo-200 hover:text-white transition duration-300">
-                      Browse Jobs
+                      className="text-teal-200 hover:text-white transition duration-300">
+                      Find Jobs
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/about"
-                      className="text-indigo-200 hover:text-white transition duration-300">
-                      About Us
+                      href="/network"
+                      className="text-teal-200 hover:text-white transition duration-300">
+                      Grow Your Network
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/contact"
-                      className="text-indigo-200 hover:text-white transition duration-300">
-                      Contact Us
+                      href="/learning"
+                      className="text-teal-200 hover:text-white transition duration-300">
+                      Learning Resources
                     </Link>
                   </li>
                 </ul>
@@ -103,7 +119,7 @@ export default function RootLayout({
                 <div className="flex space-x-4">
                   <a
                     href="#"
-                    className="text-indigo-200 hover:text-white transition duration-300">
+                    className="text-teal-200 hover:text-white transition duration-300">
                     <svg
                       className="w-6 h-6"
                       fill="currentColor"
@@ -118,7 +134,7 @@ export default function RootLayout({
                   </a>
                   <a
                     href="#"
-                    className="text-indigo-200 hover:text-white transition duration-300">
+                    className="text-teal-200 hover:text-white transition duration-300">
                     <svg
                       className="w-6 h-6"
                       fill="currentColor"
@@ -133,7 +149,7 @@ export default function RootLayout({
                   </a>
                   <a
                     href="#"
-                    className="text-indigo-200 hover:text-white transition duration-300">
+                    className="text-teal-200 hover:text-white transition duration-300">
                     <svg
                       className="w-6 h-6"
                       fill="currentColor"
@@ -145,8 +161,8 @@ export default function RootLayout({
                 </div>
               </div>
             </div>
-            <div className="mt-16 text-center text-indigo-200">
-              © {new Date().getFullYear()} JobHub. All rights reserved.
+            <div className="mt-16 text-center text-teal-200">
+              © {new Date().getFullYear()} DocdIN. All rights reserved.
             </div>
           </div>
         </footer>
