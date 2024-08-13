@@ -56,7 +56,7 @@ export default function JobsPage({
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-4">
         <div className="sticky mb-4 lg:ml-10">
           <Suspense fallback={<div>Loading...</div>}>
             <PaginationDemo
@@ -66,7 +66,7 @@ export default function JobsPage({
             />
           </Suspense>
         </div>
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-12">
           <aside className="lg:w-1/3">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold mb-4">Filter Jobs</h2>
@@ -74,7 +74,7 @@ export default function JobsPage({
             </div>
           </aside>
           <main className="lg:w-3/4">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className=" p-6 ">
               <h2 className="text-2xl font-semibold mb-6">
                 Latest Job Listings
               </h2>

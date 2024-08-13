@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
-import { SessionProvder } from "next-auth/react";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
