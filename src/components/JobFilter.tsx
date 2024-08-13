@@ -8,16 +8,28 @@ import { Checkbox } from "./ui/checkbox";
 import { Search, Filter, MapPin, Briefcase } from "lucide-react";
 import axios from "axios";
 
-export default function JobFilter() {
+interface Filters {
+  search: string;
+  location: string;
+  jobType: string;
+  salaryRanges: {
+    [key: string]: boolean; // Updated to allow indexing with any string
+    "10k-30k": boolean;
+    "30k-50k": boolean;
+    "50k-75k": boolean;
+    "75k+": boolean;
+  };
+}
+
+interface JobFilterProps {
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+}
+
+const JobFilter: React.FC<JobFilterProps> = ({ filters, setFilters }) => {
   const [locations, setLocations] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [salaryRanges, setSalaryRanges] = useState({
-    "10k-30k": false,
-    "30k-50k": false,
-    "50k-75k": false,
-    "75k+": false,
-  });
 
   useEffect(() => {
     async function fetchLocations() {
@@ -39,13 +51,17 @@ export default function JobFilter() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission logic here
+    // Trigger the filter change in parent component
+    setFilters({ ...filters });
   };
 
   const handleSalaryRangeChange = (range: string) => {
-    setSalaryRanges((prev) => ({
+    setFilters((prev) => ({
       ...prev,
-      [range]: !prev[range as keyof typeof salaryRanges],
+      salaryRanges: {
+        ...prev.salaryRanges,
+        [range]: !prev.salaryRanges[range],
+      },
     }));
   };
 
@@ -69,6 +85,10 @@ export default function JobFilter() {
           </Label>
           <div className="relative group">
             <Input
+              value={filters.search}
+              onChange={(e) =>
+                setFilters({ ...filters, search: e.target.value })
+              }
               id="search"
               name="search"
               placeholder="Medical specialty, hospital, or keywords"
@@ -88,6 +108,10 @@ export default function JobFilter() {
           </Label>
           <div className="relative group">
             <Select
+              value={filters.location}
+              onChange={(e) =>
+                setFilters({ ...filters, location: e.target.value })
+              }
               className="pl-12 border-2 border-teal-400 rounded-lg focus:border-teal-600 focus:ring focus:ring-teal-300 transition-all duration-300"
               id="location"
               name="location"
@@ -116,6 +140,10 @@ export default function JobFilter() {
           </Label>
           <div className="relative group">
             <Select
+              value={filters.jobType}
+              onChange={(e) =>
+                setFilters({ ...filters, jobType: e.target.value })
+              }
               className="pl-12 border-2 border-teal-400 rounded-lg focus:border-teal-600 focus:ring focus:ring-teal-300 transition-all duration-300"
               id="jobType"
               name="jobType">
@@ -138,7 +166,7 @@ export default function JobFilter() {
             Salary Range
           </Label>
           <div className="grid grid-cols-2 gap-4">
-            {Object.entries(salaryRanges).map(([range, checked]) => (
+            {Object.entries(filters.salaryRanges).map(([range, checked]) => (
               <div key={range} className="flex items-center space-x-2">
                 <Checkbox
                   id={range}
@@ -165,4 +193,6 @@ export default function JobFilter() {
       </form>
     </div>
   );
-}
+};
+
+export default JobFilter;

@@ -14,6 +14,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                String   @id @default(uuid())
+  fullName          String
+  imageUrl          String?
+  email             String   @unique
+  password          String?  // Used for credentials sign-in
+  googleId          String?  // Used for Google sign-in
+  phone             String?
+  college           String?
+  address           String?
+  education         String?
+  residency         String?
+  job               String?
+  fellowship        String?
+  research          String?
+  articles          String?
+  certificateCourse String?
+  workshop          String?
+  conferenceHours   Int?
+  achievements      String?
+  electives         String? 
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
 model jobs{
   id Int @id @default(autoincrement())
   slug String @unique
@@ -27,6 +52,7 @@ model jobs{
   applicationEmail String ?
   applicationUrl String?
   comapanyLongUrl String?
+  experience String?
   approved Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

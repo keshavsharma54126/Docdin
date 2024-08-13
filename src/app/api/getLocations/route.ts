@@ -8,7 +8,6 @@ export async function GET() {
       select: { location: true },
       distinct: ["location"],
     });
-    console.log(locations);
 
     const locationArray = locations
       .map(({ location }) => location)
