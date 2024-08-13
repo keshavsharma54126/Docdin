@@ -51,8 +51,19 @@ const JobFilter: React.FC<JobFilterProps> = ({ filters, setFilters }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Trigger the filter change in parent component
-    setFilters({ ...filters });
+
+    // Reset the filters to default values
+    setFilters({
+      search: "",
+      location: "",
+      jobType: "",
+      salaryRanges: {
+        "10k-30k": false,
+        "30k-50k": false,
+        "50k-75k": false,
+        "75k+": false,
+      },
+    });
   };
 
   const handleSalaryRangeChange = (range: string) => {
@@ -150,10 +161,10 @@ const JobFilter: React.FC<JobFilterProps> = ({ filters, setFilters }) => {
               <option value="" disabled>
                 Select job type
               </option>
-              <option value="fullTime">Full-time</option>
-              <option value="partTime">Part-time</option>
-              <option value="contract">Contract</option>
-              <option value="internship">Internship</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
             </Select>
             <Briefcase
               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-hover:text-teal-600 transition-colors duration-300"
@@ -188,7 +199,7 @@ const JobFilter: React.FC<JobFilterProps> = ({ filters, setFilters }) => {
           type="submit"
           className="w-full bg-gradient-to-r from-teal-700 to-blue-500 text-white font-semibold py-4 px-6 rounded-lg hover:from-teal-800 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-opacity-50 text-lg shadow-lg">
           <Filter className="mr-2" size={24} />
-          Apply Filters
+          Remove Filters
         </Button>
       </form>
     </div>
