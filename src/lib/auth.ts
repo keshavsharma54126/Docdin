@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
+import { signIn } from "next-auth/react";
 import db from "@/lib/db";
 
 export const authOptions: NextAuthOptions = {
@@ -63,14 +64,48 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET || "secret",
+  pages: {
+    signIn: "/signin",
+  },
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       if (token && session.user) {
         session.user.id = token.sub;
       }
       return session;
+    },
+    async signIn({ account, profile }: any) {
+      if (account.provider === "google") {
+        const existingUser = await db.user.findUnique({
+          where: {
+            googleId: account.providerAccountId,
+          },
+        });
+        if (existingUser) {
+          return true;
+        }
+        try {
+          await db.user.create({
+            data: {
+              fullName: profile.name || "New User",
+              email: profile.email || "",
+              googleId: account.providerAccountId,
+              imageUrl: profile.picture,
+            },
+          });
+          return true;
+        } catch (e) {
+          console.error("Error while creating user with Google account:", e);
+          return false;
+        }
+      }
+      return true;
     },
   },
 };

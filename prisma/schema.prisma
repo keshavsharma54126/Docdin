@@ -19,8 +19,8 @@ model User {
   fullName          String
   imageUrl          String?
   email             String   @unique
-  password          String?  // Used for credentials sign-in
-  googleId          String?  // Used for Google sign-in
+  password          String? 
+  googleId          String?  @unique
   phone             String?
   college           String?
   address           String?
