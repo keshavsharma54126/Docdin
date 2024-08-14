@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
           );
           if (passwordValid) {
             return {
-              id: existingUser.id.toString(),
+              id: existingUser.id,
               name: existingUser.fullName,
               email: existingUser.email,
             };
@@ -46,14 +46,14 @@ export const authOptions: NextAuthOptions = {
           const hashedPassword = await bcrypt.hash(credentials.password, 10);
           const newUser = await db.user.create({
             data: {
-              fullName: "user",
+              fullName: "Guest",
               email: credentials.email,
               password: hashedPassword,
             },
           });
 
           return {
-            id: newUser.id.toString(),
+            id: newUser.id,
             name: newUser.fullName,
             email: newUser.email,
           };
