@@ -1,23 +1,24 @@
 "use client";
-import Image from "next/image";
-import prisma from "@/lib/db";
-import JobListItem from "@/components/JobListItem";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-
+const Network = () => {
   const { data: session, status } = useSession();
+  const [isLoadingSession, setIsLoadingSession] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     if (status === "loading") return; // Do nothing while loading
     if (!session) {
       router.push("/api/auth/signin");
     } else {
-      setIsLoading(false);
+      setIsLoadingSession(false);
     }
   }, [session, status, router]);
-  return <div>Docdin</div>;
-}
+  if (isLoadingSession) {
+    return <div>loading....</div>;
+  }
+  return <div>Network page</div>;
+};
+
+export default Network;

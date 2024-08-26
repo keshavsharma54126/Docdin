@@ -107,5 +107,8 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
+    async redirect() {
+      return "/";
+    },
   },
 };

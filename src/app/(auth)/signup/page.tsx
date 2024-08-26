@@ -7,7 +7,8 @@ import GoogleButton from "@/components/GoogleButton";
 import { useRouter } from "next/navigation";
 import AuthLayout from "../layout";
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
+  const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -33,11 +34,28 @@ const SignIn: React.FC = () => {
         <div className="text-3xl font-bold text-teal-500">
           Welcome To DocdIN{" "}
         </div>
-        <div>please sign in to continue</div>
+        <div>please sign up to continue</div>
         <Card className="p-8 shadow-lg ">
-          <h1 className="text-3xl font-bold mb-6 text-teal-500">Sign In</h1>
+          <h1 className="text-3xl font-bold mb-6 text-teal-500">Sign Up</h1>
           <form onSubmit={handleSignIn} className="flex flex-col items-center">
             <input name="csrfToken" type="hidden" />
+            <div className="mb-6 w-full">
+              <label
+                htmlFor="fullname"
+                className="block mb-2 text-sm font-medium text-gray-900">
+                Full Name
+              </label>
+              <input
+                id="fullname"
+                name="John Doe"
+                type="text"
+                value={fullname}
+                placeholder="john doe"
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              />
+            </div>
             <div className="mb-6 w-full">
               <label
                 htmlFor="email"
@@ -49,6 +67,7 @@ const SignIn: React.FC = () => {
                 name="email"
                 type="email"
                 value={email}
+                placeholder="johndoe@gmail.com"
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -73,7 +92,7 @@ const SignIn: React.FC = () => {
             <button
               type="submit"
               className="bg-teal-500 text-white px-4 py-2 rounded-lg w-full hover:bg-teal-600 transition">
-              Sign In
+              Sign Up
             </button>
           </form>
           <div className="mt-6 w-full">
@@ -89,9 +108,9 @@ const SignIn: React.FC = () => {
             />
           </div>
           <div className="mt-4 text-center">
-            <Link href="/signup" className="text-teal-500">
-              Don't have an account?
-              <span className="underline font-bold"> Sign Up</span>
+            <Link href="/signin" className="text-teal-500">
+              Already have an accont?
+              <span className="underline font-bold"> Sign in</span>
             </Link>
           </div>
         </Card>
@@ -100,4 +119,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
