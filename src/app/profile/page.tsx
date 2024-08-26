@@ -27,7 +27,16 @@ interface UserData {
   residency?: string | null;
   updatedAt?: string;
   workshop?: string | null;
+  designation?: string | null;
+  yoe?: number | null;
 }
+
+import {
+  HomeIcon,
+  EnvelopeIcon,
+  BriefcaseIcon,
+  AcademicCapIcon,
+} from "@heroicons/react/24/outline";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -62,15 +71,59 @@ const ProfilePage = () => {
                 Profile last updated: {userData?.updatedAt}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InfoItem
-                  icon="🏠"
-                  label="Location"
-                  value={userData?.address}
-                />
-                <InfoItem icon="📞" label="Phone" value={userData?.phone} />
-                <InfoItem icon="📧" label="Email" value={userData?.email} />
-                <InfoItem icon="💼" label="Experience" value="1 Year" />
-                <InfoItem icon="💰" label="Salary" value="₹ 4,00,000" />
+                <div className="flex flex-row gap-2">
+                  <HomeIcon className="size-6" />
+                  <span className="font-semibold">Location:</span>
+                  {userData?.address ? (
+                    <span>{userData.address}</span>
+                  ) : (
+                    <span>N/A</span>
+                  )}
+                </div>
+                <div className="flex flex-row gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="size-6">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                    />
+                  </svg>
+                  <span className="font-semibold">Phone:</span>
+                  {userData?.phone ? (
+                    <span>{userData.phone}</span>
+                  ) : (
+                    <span>N/A</span>
+                  )}
+                </div>
+                <div className="flex flex-row gap-2">
+                  <EnvelopeIcon className="size-6" />
+                  <span className="font-semibold">Email:</span>
+                  {userData?.email ? (
+                    <span>{userData.email}</span>
+                  ) : (
+                    <span>N/A</span>
+                  )}
+                </div>
+                <div className="flex flex-row gap-2">
+                  <BriefcaseIcon className="size-6" />
+                  <span className="font-semibold">{userData?.yoe}</span>
+                  <span>1 Year</span>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <AcademicCapIcon className="size-6" />
+                  <span className="font-semibold">Designation:</span>
+                  {userData?.designation ? (
+                    <span>{userData.designation}</span>
+                  ) : (
+                    <span>N/A</span>
+                  )}
+                </div>
               </div>
               <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
                 Add availability to join
@@ -82,20 +135,5 @@ const ProfilePage = () => {
     </div>
   );
 };
-
-const InfoItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: string;
-  label: string;
-  value?: string | null;
-}) => (
-  <div className="flex items-center gap-2">
-    <span>{icon}</span>
-    <span className="font-semibold">{label}:</span> {value || "N/A"}
-  </div>
-);
 
 export default ProfilePage;

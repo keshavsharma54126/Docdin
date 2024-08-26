@@ -14,6 +14,7 @@ export async function GET(req: Request) {
         email: session.user.email,
       },
     });
+
     if (user) {
       return NextResponse.json({ user }, { status: 200 });
     }
