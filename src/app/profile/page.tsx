@@ -44,43 +44,16 @@ import {
   AcademicCapIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
-import Instagram from "next-auth/providers/instagram";
+
 import { FaInstagram, FaResearchgate, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
-
-const ProfileItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string | undefined | null;
-}) => (
-  <div className="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm">
-    {icon}
-    <div>
-      <span className="font-semibold text-gray-700">{label}:</span>
-      <span className="ml-2 text-gray-600">{value || "N/A"}</span>
-    </div>
-  </div>
-);
-
-const SocialLink = ({
-  href,
-  icon,
-}: {
-  href: string | undefined;
-  icon: React.ReactNode;
-}) => (
-  <Link href={href || "#"}>
-    <div className="bg-white p-2 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-      {icon}
-    </div>
-  </Link>
-);
+import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
+  const session = useSession();
+  const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   useEffect(() => {
     getUserData();
@@ -89,6 +62,9 @@ const ProfilePage = () => {
     const res = await axios.get("/api/userInfo");
     setUserData(res.data.user);
   };
+  if (!session) {
+    router.push("/signin");
+  }
 
   return (
     <div className="container mx-auto">
@@ -171,6 +147,14 @@ const ProfilePage = () => {
                     </div>
                   </Link>
                 </div>
+              </div>
+              <div className="flex flex-row gap-4 my-6">
+                <Button variant="docdin">Connect </Button>
+                {session.data?.user?.email === userData?.email ? (
+                  <Button variant="docdin">Post Job</Button>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           </div>
