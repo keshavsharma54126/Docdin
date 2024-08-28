@@ -21,7 +21,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Pencil } from "lucide-react";
 
 interface UserData {
   achievements?: string | null;

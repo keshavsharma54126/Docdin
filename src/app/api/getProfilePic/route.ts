@@ -19,6 +19,7 @@ export async function GET(req: Request) {
         email: session.user.email,
       },
       select: {
+        id: true,
         imageUrl: true,
         fullName: true,
       },
@@ -32,6 +33,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       profilePic: user.imageUrl,
       name: user.fullName,
+      id: user.id,
     });
   } catch (error) {
     console.error("Error while fetching user data:", error);

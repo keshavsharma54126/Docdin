@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -18,14 +18,21 @@ import { useEffect, useState } from "react";
 const AvatarDropdown = () => {
   const router = useRouter();
   const [name, setName] = useState("");
+  const [userid, setUserId] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const session = useSession();
+  if (!session) {
+    router.push("/signin");
+  }
+  const userId = session.data?.user?.name;
+  console.log(userId);
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const res = await axios.get("/api/getProfilePic");
         setName(res.data.name);
         setProfilePic(res.data.profilePic);
-        console.log(profilePic);
+        setUserId(res.data.id);
       } catch (e) {
         console.error("There was an error fetching the profile pic", e);
       }
@@ -45,7 +52,7 @@ const AvatarDropdown = () => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <Link href="/profile">
+          <Link href={`/profile/${userid}`}>
             <DropdownMenuItem className="hover:bg-slate-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
