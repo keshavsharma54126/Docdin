@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import Select from "./ui/select";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import Select from "../ui/select";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import { Search, Filter, MapPin, Briefcase } from "lucide-react";
 import axios from "axios";
 

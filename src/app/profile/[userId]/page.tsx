@@ -62,6 +62,8 @@ import {
   PhoneIcon,
   PencilIcon,
 } from "@heroicons/react/24/outline";
+import { AcademicModal } from "@/components/profilepage/AcademicModal";
+import { ProffessionalModal } from "@/components/profilepage/ProffessionalModal";
 
 const ProfilePage = () => {
   const session = useSession();
@@ -200,6 +202,9 @@ const ProfilePage = () => {
                 <span className="text-gray-500">Posted 2 hours ago</span>
                 <Button
                   variant="link"
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                  }}
                   className="text-blue-600 hover:text-blue-800 p-0 h-auto">
                   Read More
                 </Button>
@@ -219,8 +224,11 @@ const ProfilePage = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                    }}
                     className="bg-white text-blue-600 rounded-full p-2 shadow-md transition-colors duration-200 hover:bg-blue-100">
-                    <PencilIcon className="h-5 w-5" />
+                    <AcademicModal />
                   </motion.button>
                   <ChevronDownIcon className="h-6 w-6 transition-transform duration-200" />
                 </div>
@@ -268,8 +276,11 @@ const ProfilePage = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                    }}
                     className="bg-white text-green-600 rounded-full p-2 shadow-md transition-colors duration-200 hover:bg-green-100">
-                    <PencilIcon className="h-5 w-5" />
+                    <ProffessionalModal />
                   </motion.button>
                   <ChevronDownIcon className="h-6 w-6 transition-transform duration-200" />
                 </div>

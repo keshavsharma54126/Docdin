@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import prisma from "@/lib/db";
-import JobListItem from "@/components/JobListItem";
+import JobListItem from "@/components/jobspage/JobListItem";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

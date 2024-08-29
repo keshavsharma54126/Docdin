@@ -8,7 +8,7 @@ import { Providers } from "../../provider";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],

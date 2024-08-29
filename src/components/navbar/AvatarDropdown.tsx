@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";

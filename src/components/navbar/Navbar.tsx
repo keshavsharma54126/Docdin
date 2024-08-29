@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import AvatarDropdown from "@/components/AvatarDropdown";
-import logo from "../assets/docdinLogo.jpg";
+import AvatarDropdown from "@/components/navbar/AvatarDropdown";
+import logo from "../../assets/docdinLogo.jpg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 

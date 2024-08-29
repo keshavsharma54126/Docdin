@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Suspense } from "react";
-import JobListItem from "@/components/JobListItem";
-import JobFilter from "@/components/JobFilter";
-import { PaginationDemo } from "@/components/Pagination";
+import JobListItem from "@/components/jobspage/JobListItem";
+import JobFilter from "@/components/jobspage/JobFilter";
+import { PaginationDemo } from "@/components/jobspage/Pagination";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 

@@ -66,6 +66,7 @@ model jobs {
 model Education {
   id            String    @id @default(uuid())
   degree        String
+  fieldOfStudy  String
   institution   String
   startDate     DateTime
   endDate       DateTime?

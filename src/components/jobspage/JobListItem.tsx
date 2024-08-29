@@ -2,14 +2,14 @@ import React from "react";
 import { jobs } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import companylogoplaceholder from "../assets/company-logo-placeholder.png";
-import { Badge } from "./ui/badge";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import companylogoplaceholder from "../../assets/company-logo-placeholder.png";
+import { Badge } from "../ui/badge";
 import { Banknote, Briefcase, Clock, Globe2, MapPin } from "lucide-react";
 import { formatMoney, relativeDate } from "@/lib/utils";
 import dynamic from "next/dynamic";
 
-const AnimatedComponent = dynamic(() => import("./AnimatedComponent"), {
+const AnimatedComponent = dynamic(() => import("../AnimatedComponent"), {
   ssr: false,
 });
 
