@@ -64,6 +64,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { AcademicModal } from "@/components/profilepage/AcademicModal";
 import { ProffessionalModal } from "@/components/profilepage/ProffessionalModal";
+import { ProfileOverviewModal } from "@/components/profilepage/ProfileOverviewModal";
 
 const ProfilePage = () => {
   const session = useSession();
@@ -110,7 +111,7 @@ const ProfilePage = () => {
                     whileHover={{ scale: 1.1, rotate: 15 }}
                     whileTap={{ scale: 0.9 }}
                     className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
-                    <PencilIcon className="h-6 w-6" />
+                    <ProfileOverviewModal />
                   </motion.button>
                 </div>
                 <p className="text-xl text-gray-600 mb-6">
@@ -161,12 +162,21 @@ const ProfilePage = () => {
                   />
                 </div>
                 <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                  <Button
-                    variant="docdin"
-                    className="flex items-center gap-2 text-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <UserPlusIcon className="h-5 w-5" />
-                    Connect
-                  </Button>
+                  {session.data?.user?.email === userData?.email ? (
+                    <Button
+                      variant="docdin"
+                      className="flex items-center gap-2 text-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <UserPlusIcon className="h-5 w-5" />
+                      Find People
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="docdin"
+                      className="flex items-center gap-2 text-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <UserPlusIcon className="h-5 w-5" />
+                      Connect
+                    </Button>
+                  )}
                   {session.data?.user?.email === userData?.email && (
                     <Button
                       variant="docdin"
