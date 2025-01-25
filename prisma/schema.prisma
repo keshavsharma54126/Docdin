@@ -31,14 +31,20 @@ model User {
   electives         String?
   yoe               Int?
   experience        Experience[]
+  // groups            groups[]
   connections       User[]        @relation("UserConnections")
   connectedTo       User[]        @relation("UserConnections")
   socialLinks       SocialLink?
-  organization      Boolean?
+  type      UserType
   jobsPosted        jobs[]         @relation("PostedJobs")
   appliedJobs       jobs[]         @relation("AppliedJobs")
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
+}
+
+enum UserType {
+  COMPANY
+  INDIVIDUAL
 }
 
 model jobs {
@@ -124,3 +130,48 @@ model SocialLink {
   userId        String  @unique
   user          User    @relation(fields: [userId], references: [id])
 }
+
+model post{
+  id        String  @id @default(uuid())
+  content   String
+  author    String
+  authorImage String?
+  timestamp DateTime @default(now())
+  likes     Int
+  comments  Int
+  views     Int
+  category  String
+  subCategory String
+  title     String
+  description String
+  image     String?
+  type      PostType
+  url       String?
+}
+
+enum PostType {
+  article 
+  short_post
+}
+
+// model connections{
+// }
+
+
+// model groups {
+
+// }
+
+// model messages{
+
+// }
+
+// model  notifications{
+
+// }
+
+
+
+
+
+

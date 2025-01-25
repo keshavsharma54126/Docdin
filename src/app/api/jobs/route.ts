@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const page = Number(url.searchParams.get("page")) || 1;
   const per_page = Number(url.searchParams.get("per_page")) || 5;
 
-  const filters: any = {
+  const filters: any= {
     approved: true,
     AND: [
       search
